@@ -13,7 +13,13 @@ public class SimpleBigNumbersService implements BigNumbersService {
      */
     @Override
     public BigDecimal getPrecisionNumber(int a, int b, int range) {
-        return null;
+
+        if (b == 0) {
+            System.out.println("Недопустимая опереация: деление на ноль ( " + a + " / 0 )!");
+            return null;
+        } else {
+            return new BigDecimal(a).divide(new BigDecimal(b), range, BigDecimal.ROUND_HALF_UP);
+        }
     }
 
     /**
@@ -24,6 +30,16 @@ public class SimpleBigNumbersService implements BigNumbersService {
      */
     @Override
     public BigInteger getPrimaryNumber(int range) {
+
+        for (int i = 2, n = 0; n <= range; i++) {
+
+            BigInteger temp = new BigInteger(String.valueOf(i));
+
+            if (temp.isProbablePrime(10)) {
+                if (n++ == range) { return temp; }
+            }
+        }
+
         return null;
     }
 }
