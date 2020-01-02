@@ -56,7 +56,7 @@ public class Main {
 
         {/* SECTION FOR DEBUGGING OPERATIONS WITH DATES */
 
-            System.out.println("\n/* SECTION FOR DEBUGGING OPERATIONSS WITH DATES */\n");
+            System.out.println("\n/* SECTION FOR DEBUGGING OPERATIONS WITH DATES */\n");
 
             SimpleDateService dateSer = new SimpleDateService();
             LocalDate theDate = LocalDate.now();
@@ -96,6 +96,9 @@ public class Main {
 
             formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
             System.out.println("\tdd-LLLL-yyyy: " + dateSer.convertToCustomFormat(sonBirthDate, formatter));
+
+            formatter = DateTimeFormatter.ofPattern("yyyy\\LLLL\\d");
+            System.out.println("\tyyyy\\LLLL\\d: " + dateSer.convertToCustomFormat(sonBirthDate, formatter));
 
             System.out.println();
 
