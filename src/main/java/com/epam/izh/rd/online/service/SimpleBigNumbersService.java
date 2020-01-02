@@ -15,7 +15,7 @@ public class SimpleBigNumbersService implements BigNumbersService {
     public BigDecimal getPrecisionNumber(int a, int b, int range) {
 
         if (b == 0) {
-            System.out.println("Недопустимая опереация: деление на ноль ( " + a + " / 0 )!");
+            System.out.println("Недопустимая операция: деление на ноль ( " + a + " / 0 )!");
             return null;
         } else {
             return new BigDecimal(a).divide(new BigDecimal(b), range, BigDecimal.ROUND_HALF_UP);
