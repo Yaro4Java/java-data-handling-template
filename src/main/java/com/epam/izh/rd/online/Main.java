@@ -122,5 +122,27 @@ public class Main {
             System.out.println("\n/* END OF DEBUGGING OPERATIONS WITH DATES */\n");
 
         }/* END OF DEBUGGING OPERATIONS WITH DATES */
+
+
+        {/* PLAYING WITH THE STRING POOL */
+
+            System.out.println("\n/* PLAYING WITH THE STRING POOL */\n");
+
+
+            String a = "some string value";
+            String b = new String(a);
+
+            System.out.println("String a = \"some string value\";");
+            System.out.println("String b = new String(a); // Initialzing b with the same value as a (\"some string value\") through constructor");
+            System.out.println("(a == b) = " + (a == b) + " // Using different references for a and b!");
+
+            System.out.println("\nConnecting b reference with the String pool ( b = b.intern() ) ...");
+            b = b.intern();
+            System.out.println("Now b is a reference to String pool as well as a:\n(a == b) = " + (a == b) + " // Using same reference for a and b");
+
+            System.out.println("\n/* END OF PLAYING WITH THE STRING POOL */\n");
+
+
+        }/* END OF PLAYING WITH THE STRING POOL */
     }
 }
