@@ -133,11 +133,21 @@ public class Main {
             String b = new String(a);
 
             System.out.println("String a = \"some string value\";");
-            System.out.println("String b = new String(a); // Initialzing b with the same value as a (\"some string value\") through constructor");
+            System.out.println("String b = new String(a); // Initialzing b by the same value as a (\"some string value\") through constructor");
+            System.out.println("\t|");
+            System.out.println("\t| (a.hashCode() == b.hashCode()) = " + (a.hashCode() == b.hashCode()) + " (hashCode=" + a.hashCode() + ")");
+            System.out.println("\t| a.equals(b) = " + a.equals(b));
+            System.out.println("\t| b.equals(a) = " + b.equals(a));
+            System.out.println("\tV");
             System.out.println("(a == b) = " + (a == b) + " // Using different references for a and b!");
 
             System.out.println("\nConnecting b reference with the String pool ( b = b.intern() ) ...");
             b = b.intern();
+            System.out.println("\t|");
+            System.out.println("\t| (a.hashCode() == b.hashCode()) = " + (a.hashCode() == b.hashCode()) + " (hashCode=" + a.hashCode() + ")");
+            System.out.println("\t| a.equals(b) = " + a.equals(b));
+            System.out.println("\t| b.equals(a) = " + b.equals(a));
+            System.out.println("\tV");
             System.out.println("Now b is a reference to String pool as well as a:\n(a == b) = " + (a == b) + " // Using same reference for a and b");
 
             System.out.println("\n/* END OF PLAYING WITH THE STRING POOL */\n");
