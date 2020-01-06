@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -61,7 +62,7 @@ public class FileRepositoryTest {
     }
 
 
-    private File getFile(String path) {
+     private File getFile(String path) {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(path);
         if (resource != null) {
@@ -69,4 +70,5 @@ public class FileRepositoryTest {
         }
         return new File("");
     }
+
 }

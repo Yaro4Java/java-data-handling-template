@@ -1,17 +1,23 @@
 package com.epam.izh.rd.online;
 
+import com.epam.izh.rd.online.repository.SimpleFileRepository;
 import com.epam.izh.rd.online.service.SimpleBigNumbersService;
 import com.epam.izh.rd.online.service.SimpleDateService;
+
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
-import java.util.Formatter;
 
 public class Main {
     public static void main(String[] args) {
@@ -152,7 +158,74 @@ public class Main {
 
             System.out.println("\n/* END OF PLAYING WITH THE STRING POOL */\n");
 
-
         }/* END OF PLAYING WITH THE STRING POOL */
+
+
+        {/* DEBUGGING OPERATIONS WITH FILES */
+
+            System.out.println("\n/* DEBUGGING OPERATIONS WITH FILES */\n");
+
+            SimpleFileRepository rep4Files = new SimpleFileRepository();
+
+            String path = "testDirCountFiles";
+
+            System.out.println("Root path is '" + path +"':\n");
+
+            long totalFiles = rep4Files.countFilesInDirectory(path);
+            System.out.println("Total number of files in the folder '" + path + "' is " + totalFiles);
+
+            long totalDirs = rep4Files.countDirsInDirectory(path);
+            System.out.println("Total number of directories and subdirectories in the folder '" + path + "' ( including the folder itself ) is " + totalDirs);
+
+            String file = "my_file.txt";
+            String dir = "my_dir(Yaro4Java)";
+
+            System.out.println("\nTrying to create text file '" + file + "' in directory '" + dir + "' ...");
+
+
+
+            System.out.println("File '" + file + "' was " + (rep4Files.createFile(dir, file) ? "successfully " : "not ") + "created.");
+
+            System.out.println("\n/* END OF DEBUGGING OPERATIONS WITH FILES */\n");
+
+        }/* END OF DEBUGGING OPERATIONS WITH FILES */
+
+
+        {/* PLAYING WITH RESOURCES */
+
+            System.out.println("\n/* PLAYING WITH RESOURCES */\n");
+
+            System.out.println("Listing ClassLoader URLs:\n");
+            // Listing ClassLoader URLs
+            URL[] urls = ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs();
+            for (URL url : urls) {
+                System.out.println("---> '" + url.getPath() + "'");
+            }
+
+            URL res = Main.class.getClassLoader().getResource("testDirCreateFile/newFile.txt");
+            System.out.println("\nGot resource 'testDirCreateFile/newFile.txt'? - " + (res != null));
+
+            // Getting resources
+            URL resource = Main.class.getResource("/");
+            URI resURI = null;
+
+            try {
+                resURI = resource.toURI(); // URI for resources
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+            // Getting path to compiled resources folder (target\classes\...)
+            Path targetPath = Paths.get(resURI);
+            String targetDir = targetPath.toString();
+
+            String projectDir = new File("").getAbsolutePath();
+
+            System.out.println("\nProject folder is '" + projectDir + "'");
+            System.out.println("Compiled resources folder is '" + targetDir + "'");
+
+            System.out.println("\n/* END OF PLAYING WITH RESOURCES */\n");
+
+        }/* END OF PLAYING WITH RESOURCES */
     }
 }
