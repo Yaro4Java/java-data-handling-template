@@ -89,7 +89,7 @@ public class SimpleTextService implements TextService {
 
         if (len == 0) { return false; }
 
-        for (int n = 0; n < (len / 2) - (len % 2); n++) {
+        for (int n = 0; n < len - n; n++) {
 
             String sub1 = temp.substring(n, n + 1).intern(); // Reading from left
             String sub2 = temp.substring(len - n - 1, len - n).intern(); // Reading from right
