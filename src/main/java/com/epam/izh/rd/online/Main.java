@@ -3,6 +3,7 @@ package com.epam.izh.rd.online;
 import com.epam.izh.rd.online.repository.SimpleFileRepository;
 import com.epam.izh.rd.online.service.SimpleBigNumbersService;
 import com.epam.izh.rd.online.service.SimpleDateService;
+import com.epam.izh.rd.online.service.SimpleTextService;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -227,5 +228,59 @@ public class Main {
             System.out.println("\n/* END OF PLAYING WITH RESOURCES */\n");
 
         }/* END OF PLAYING WITH RESOURCES */
+
+
+        {/* PLAYING WITH STRINGS */
+
+            System.out.println("\n/* PLAYING WITH STRINGS */\n");
+
+            String s = "String for test!";
+            char[] arr = s.toCharArray();
+
+            System.out.println("A string to be converted into char array arr[]: '" + s + "'");
+            for (int i = 0; i < s.length(); i++) {
+                System.out.println("--> arr[" + i + "] = '" + arr[i] + "'");
+            }
+
+            System.out.println();
+
+            SimpleTextService textSer = new SimpleTextService();
+
+            String ini = "Vabudibuda baabaabaabaabaabaabaabaabaa!!?    ";
+            System.out.println("ini = '" + ini + "'");
+            String sub = "ba";
+            System.out.println("sub = '" + sub + "'");
+
+            String result = textSer.removeString(ini, sub);
+
+            System.out.println("-------------------------------------");
+            System.out.println("Result = removeString(ini, sub) = '" + result + "'");
+
+            System.out.println("Was ini string a question? - " + (textSer.isQuestionString(ini) ? "Yep" : "Nope"));
+
+            ini = null;
+            System.out.println("\nini = '" + ini + "'");
+            System.out.println("Was ini string a question? - " + (textSer.isQuestionString(ini) ? "Yep" : "Nope"));
+
+            result = textSer.concatenate("Smells", " ", "Like", " ", "Teen", " ", "Spirit");
+
+            System.out.println("\nTrying to concatinate strings: 'Smells', ' ', 'Like', ' ', 'Teen', ' ', 'Spirit' ...");
+            System.out.println("Concatinated result is '" + result + "'");
+
+            System.out.println();
+
+            ini = "This is a meander transformation";
+            System.out.println("ini = '" + ini + "'");
+            System.out.println("The meandered result = '" + textSer.toJumpCase(ini) + "'");
+
+            System.out.println();
+
+            ini = "lOl=а роза* упал!а: на; % <  лапу? >>> Азора.LoL";
+            System.out.println("ini = '" + ini + "'");
+            System.out.println("Is ini a palindrome? - " + (textSer.isPalindrome(ini) ? "Yep" : "Nope"));
+
+            System.out.println("\n/* END OF PLAYING WITH STRINGS */\n");
+
+        }/* END OF PLAYING WITH STRINGS */
     }
 }

@@ -13,7 +13,8 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String removeString(String base, String remove) {
-        return null; //TODO
+        if ((base == null) || (remove == null)) { return null; }
+        return base.replace(remove,"");
     }
 
     /**
@@ -24,7 +25,8 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public boolean isQuestionString(String text) {
-        return false; //TODO
+        if (text == null) { return false; }
+        return text.trim().endsWith("?");
     }
 
     /**
@@ -35,7 +37,12 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String concatenate(String... elements) {
-        return null; //TODO
+        if (elements == null) { return null; }
+        String concat = "";
+        for (int n = 0; n < elements.length; n++) {
+            concat += elements[n];
+        }
+        return concat;
     }
 
     /**
@@ -47,7 +54,20 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String toJumpCase(String text) {
-        return null; //TODO
+
+        if (text == null) { return null; }
+
+        String result = "";
+
+        for (int n = 0; n < text.length(); n++) {
+
+            String sub = text.substring(n, n + 1); // Taking character from each position as a substring
+
+            if((n % 2) == 0) { result += sub.toLowerCase(); }
+            else { result += sub.toUpperCase(); }
+        }
+
+        return result;
     }
 
     /**
@@ -59,6 +79,25 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public boolean isPalindrome(String string) {
-       return false; //TODO
+
+        if (string == null) { return false; }
+
+        String temp = string.toLowerCase(); // To ignore case while analysing the contents
+        temp = temp.replaceAll("[[^a-z]&&[^а-я]]", ""); // To ignore non alphabetical characters
+
+        int len = temp.length();
+
+        if (len == 0) { return false; }
+
+        for (int n = 0; n < (len / 2) - (len % 2); n++) {
+
+            String sub1 = temp.substring(n, n + 1).intern(); // Reading from left
+            String sub2 = temp.substring(len - n - 1, len - n).intern(); // Reading from right
+
+            // Comparing two interned string variables
+            if(sub1 != sub2) { return false; }
+        }
+
+        return true;
     }
 }
