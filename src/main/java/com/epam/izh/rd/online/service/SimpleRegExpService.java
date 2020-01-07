@@ -25,13 +25,13 @@ public class SimpleRegExpService implements RegExpService {
         content = rep4File.readFileFromResources("sensitive_data.txt");
 
         // Regular expression to identify account numbers
-        String regex = "(\\d{4})\\s(\\d{4}\\s\\d{4})\\s(\\d{4})"; // Group 2 is to be masked by asterisks
+        String regex = "\\d{4}\\s(\\d{4}\\s\\d{4})\\s\\d{4}"; // Group 1 is to be masked by asterisks
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
 
         while (matcher.find()) {
-            content = content.replaceAll(matcher.group(2), "**** ****");
+            content = content.replaceAll(matcher.group(1), "**** ****");
         }
 
         return content;
