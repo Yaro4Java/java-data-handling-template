@@ -1,5 +1,9 @@
 package com.epam.izh.rd.online.service;
 
+import com.epam.izh.rd.online.repository.SimpleFileRepository;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SimpleRegExpService implements RegExpService {
 
     /**
@@ -11,7 +15,26 @@ public class SimpleRegExpService implements RegExpService {
      */
     @Override
     public String maskSensitiveData() {
-        return null;
+
+        // Using methods of another class object to work with files
+        SimpleFileRepository rep4File = new SimpleFileRepository();
+
+        String content = ""; // Variable to put in the data from the file
+
+        // Reading data from file
+        content = rep4File.readFileFromResources("sensitive_data.txt");
+
+        // Regular expression to identify account numbers
+        String regex = "(\\d{4})\\s(\\d{4}\\s\\d{4})\\s(\\d{4})"; // Group 2 is to be masked by asterisks
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+
+        while (matcher.find()) {
+            content = content.replaceAll(matcher.group(2), "**** ****");
+        }
+
+        return content;
     }
 
     /**
@@ -22,6 +45,31 @@ public class SimpleRegExpService implements RegExpService {
      */
     @Override
     public String replacePlaceholders(double paymentAmount, double balance) {
-        return null;
+
+        // Using methods of another class object to work with files
+        SimpleFileRepository rep4File = new SimpleFileRepository();
+
+        String content = ""; // Variable to put in the data from the file
+
+        // Reading data from file
+        content = rep4File.readFileFromResources("sensitive_data.txt");
+
+        // Regular expression to identify account numbers
+        String regex = "\\$\\{([a-z_0-9]+)\\}"; // Group 0 is to be replaced, group 1 is for identification
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+
+        while (matcher.find()) {
+            String group = Pattern.quote(matcher.group()); // Quoting found substring with metacharacters
+            if(matcher.group(1).intern() == "payment_amount") {
+                content = content.replaceAll(group, String.valueOf((int)paymentAmount));
+            }
+            if(matcher.group(1).intern() == "balance") {
+                content = content.replaceAll(group, String.valueOf((int)balance));
+            }
+        }
+
+        return content;
     }
 }

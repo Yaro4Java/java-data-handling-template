@@ -104,7 +104,7 @@ public class SimpleFileRepository implements FileRepository {
         }
 
         for (File f : fromDir.listFiles()) {
-            if (f.isFile() && (f.getName().endsWith(".txt"))) {
+            if (f.isFile() && f.getName().endsWith(".txt")) {
                 File copy = new File(to + "\\" + f.getName());
                 try {
                     copy.createNewFile();

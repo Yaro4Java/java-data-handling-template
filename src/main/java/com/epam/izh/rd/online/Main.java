@@ -3,6 +3,7 @@ package com.epam.izh.rd.online;
 import com.epam.izh.rd.online.repository.SimpleFileRepository;
 import com.epam.izh.rd.online.service.SimpleBigNumbersService;
 import com.epam.izh.rd.online.service.SimpleDateService;
+import com.epam.izh.rd.online.service.SimpleRegExpService;
 import com.epam.izh.rd.online.service.SimpleTextService;
 
 import java.io.File;
@@ -19,6 +20,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
@@ -282,5 +285,91 @@ public class Main {
             System.out.println("\n/* END OF PLAYING WITH STRINGS */\n");
 
         }/* END OF PLAYING WITH STRINGS */
+
+
+        {/* PLAYING WITH REGULAR EXPRESSIONS */
+
+            System.out.println("\n/* PLAYING WITH REGULAR EXPRESSIONS */\n");
+
+            String content = "What a wonderful world! 12.345 Wow!!! That was really cool!"; // Variable to put in the data from the file
+
+            // Regular expression to identify account number to be masked
+            String regex;
+            Pattern pattern;
+            Matcher matcher;
+
+            System.out.println("The string to be searched through: '" + content + "'");
+
+            regex = "[wW][a-zA-Z]+";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(content);
+            System.out.println("\nThe regular expression pattern to be used for searching a substring: '" + regex + "'");
+
+            while (matcher.find()) {
+                System.out.println("--> found matched substring: '" + content.substring(matcher.start(), matcher.end()) + "'");
+            }
+
+            regex = "\\w+[wW]\\b";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(content);
+            System.out.println("\nThe regular expression pattern to be used for searching a substring: '" + regex + "'");
+
+            while (matcher.find()) {
+                System.out.println("--> found matched substring: '" + content.substring(matcher.start(), matcher.end()) + "'");
+            }
+
+            content = "The account number is 1234 5555 6785 9900 and that's that.";
+            System.out.println("\n\nThe string to be searched through: '" + content + "'");
+            regex = "\\d{4}";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(content);
+            System.out.println("\nThe regular expression pattern to be used for searching a substring: '" + regex + "'");
+
+            while (matcher.find()) {
+                System.out.println("--> found matched substring: '" + content.substring(matcher.start(), matcher.end()) + "'");
+            }
+
+            regex = "(\\d{4})\\s(\\d{4}\\s\\d{4})\\s(\\d{4})";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(content);
+            System.out.println("\nThe regular expression pattern to be used for searching a substring: '" + regex + "'");
+            while (matcher.find()) {
+                System.out.println("Replacing group 2: '" + content.replaceAll(matcher.group(2), "**** ****") + "'");
+            }
+
+            content = "в размере ${payment_amount} рублей. На счету осталось ${balance} рублей";
+            regex = "\\$\\{([a-z_0-9]+)\\}";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(content);
+            System.out.println("\n\nThe string to be searched through: \"" + content + "\"");
+            System.out.println("The regular expression pattern to be used for searching a substring: \"" + regex + "\"");
+            while (matcher.find()) {
+                String group = Pattern.quote(matcher.group());
+                String group1 = matcher.group(1);
+                System.out.println("\n\t| matcher.group(1) = " + group1);
+                System.out.println("\t| String group = Pattern.quote(matcher.group()) = " + group);
+                System.out.println("\t| (matcher.group(1).intern() == \"payment_amount\") = (\"" + matcher.group(1).intern() + "\" == \"payment_amount\") = " + (matcher.group(1).intern() == "payment_amount"));
+                System.out.println("\t| (matcher.group(1).intern() == \"balance\") = (\"" + matcher.group(1).intern() + "\" == \"balance\") = " + (matcher.group(1).intern() == "balance"));
+                if (matcher.group(1).intern() == "payment_amount") {
+                    System.out.println("--> Matching substring is found. Replacing 'group': \"" + content.replaceAll(group, "[>>> FOR PAYMENT AMOUNT <<<]") + "\"");
+                }
+                if (matcher.group(1).intern() == "balance") {
+                    System.out.println("--> Matching substring is found. Replacing 'group': \"" + content.replaceAll(group, "[>>> FOR BALANCE <<<]") + "\"");
+                }
+            }
+
+
+
+
+            // Using methods of another class object to work with files
+            SimpleRegExpService regExpSer = new SimpleRegExpService();
+
+            System.out.println("\nData from file:\n\"" + regExpSer.maskSensitiveData() + "\"");
+            System.out.println("\nData from file:\n\"" + regExpSer.replacePlaceholders(5, 1000000000) + "\"");
+
+
+            System.out.println("\n/* END OF PLAYING WITH REGULAR EXPRESSIONS */\n");
+
+        }/* END OF PLAYING WITH REGULAR EXPRESSIONS */
     }
 }
