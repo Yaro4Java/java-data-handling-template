@@ -83,7 +83,7 @@ public class SimpleTextService implements TextService {
         if (string == null) { return false; }
 
         String temp = string.toLowerCase(); // To ignore case while analysing the contents
-        temp = temp.replaceAll("[[^a-z]&&[^а-я]]", ""); // To ignore non alphabetical characters
+        temp = temp.replaceAll("[^a-zа-я]", ""); // To ignore non alphabetical characters
 
         int len = temp.length();
 
